@@ -8,8 +8,8 @@ for i in (kata):
 print("The {} numbers are:".format(len(kata)), end='')
 
 for i in range(len(kata)):
+    print(" {},".format(kata[i]), end='')
     if i < len(kata) - 1:
-        print(" {},".format(kata[i]), end='')
-    else:
-        print(" {}".format(kata[i]), end='')
+        print(",", end='')
+
 print()
