@@ -12,19 +12,19 @@ class Vector:
 		if isinstance(args[0], int) and args[0] > 0:# on va partir du principe que une size de 0 n'est pas possible
 			print("size init called")
 			i = 0.0
-			self.value = []
+			self.values = []
 			self.shape = (args[0], 1)
 			while i < args[0]:
-				self.value.append([i])
+				self.values.append([i])
 				i += 1
 		
 		elif isinstance(args[0], tuple) and len(args[0]) == 2 and args[0][0] <= args[0][1]:
 			print("range init called")
 			i = args[0][0]
-			self.value = []
+			self.values = []
 			self.shape = (args[0][1] - args[0][0], 1)
 			while i < args[0][1]:
-				self.value.append([float(i)])
+				self.values.append([float(i)])
 				i += 1
 		
 		elif isinstance(args[0], list) and len(args[0]) == 1 and isinstance(args[0][0], list) and len(args[0][0]) > 0:			
@@ -32,7 +32,7 @@ class Vector:
 			for i in args[0][0]:
 				if not isinstance(i, float):
 					raise Exception("Vector.__init__() {} is not a valid argument".format(args[0][0]))
-			self.value = args[0]
+			self.values = args[0]
 			self.shape = (1, len(args[0][0]))
 		
 		elif isinstance(args[0], list) and len(args[0]) > 0 and isinstance(args[0][0], list) and len(args[0][0]) == 1:
@@ -40,12 +40,17 @@ class Vector:
 			for i in args[0]:
 				if not isinstance(i, list) and len(i) != 1 and not isinstance(i[0], float):
 					raise Exception("Vector.__init__() {} is not a valid argument")
-			self.value = args[0]
+			self.values = args[0]
 			self.shape = (len(args[0]), 1)
 		
 		else:
 			raise Exception("Vector.__init__() {} is not a valid argument")
 
+	def __str__(self):
+		return "Vector({})".format(self.values)
+
+	def __repr__(self):
+		return "Vector({})".format(self.values)
 
 	def dot(self, *args):
 		if len(args) != 1 or not isinstance(args[0], Vector):
@@ -57,10 +62,10 @@ class Vector:
 		ret = 0.
 		if self.shape[0] == 1 and self.shape[1] > 0:
 			for i in range(self.shape[1]):
-				ret += self.value[0][i] * args[0].value[0][i]
+				ret += self.values[0][i] * args[0].values[0][i]
 		elif self.shape[1] == 1 and self.shape[0] > 0:
 			for i in range(self.shape[0]):
-				ret += self.value[i][0] * args[0].value[i][0]
+				ret += self.values[i][0] * args[0].values[i][0]
 		return ret
 
 	def T(self):
@@ -68,165 +73,236 @@ class Vector:
 		ret = []
 		if self.shape[0] == 1 and self.shape[1] > 0:
 			for i in range(self.shape[1]):
-				ret.append([self.value[0][i]])
+				ret.append([self.values[0][i]])
 			return Vector(ret)
 		elif self.shape[1] == 1 and self.shape[0] > 0:
 			for i in range(self.shape[0]):
-				ret.append(self.value[i][0])
+				ret.append(self.values[i][0])
 			return Vector([ret])
 
 	def __add__(self, rhs):
 		if not isinstance(rhs, Vector):
 			if self.shape == (1, 1):
 				try:
-					ret = self.value[0][0] + rhs
+					ret = self.values[0][0] + rhs
 				except TypeError:
-					raise Exception("Vector.__add__() no overload viable for '{} + {}'".format(self.value, rhs))
-				print("Vector.__add__(): {} + {}".format(self.value, rhs))
+					raise NotImplementedError("'{} + {}' Add a {} to a Vector is not defined here.".format(self.values, rhs, type(rhs)))
+				print("Vector.__add__(): {} + {}".format(self.values, rhs))
 				return Vector([[ret]])
 			else:
-				raise Exception("Vector.__add__() no overload viable for '{} + {}'".format(self.value, rhs))
+				raise NotImplementedError("'{} + {}' Add a {} to a non-scalar Vector is not defined here.".format(self.values, rhs, type(rhs)))
 		
-		print("Vector.__add__(): {} + {}".format(self.value, rhs.value))
 		if self.shape != rhs.shape:
-			raise Exception("Vector.__add__() vectors have different shapes")
+			raise NotImplementedError("'{} + {}' Add Vectors with differents shapes is not defined here.".format(self.values, rhs))
+		
+		print("Vector.__add__(): {} + {}".format(self.values, rhs.values))
+		
 		ret = []
 		if self.shape[0] == 1 and self.shape[1] > 0:
 			for i in range(self.shape[1]):
-				ret.append(self.value[0][i] + rhs.value[0][i])
+				ret.append(self.values[0][i] + rhs.values[0][i])
 			return Vector([ret])
 		elif self.shape[1] == 1 and self.shape[0] > 0:
 			for i in range(self.shape[0]):
-				ret.append([self.value[i][0] + rhs.value[i][0]])
+				ret.append([self.values[i][0] + rhs.values[i][0]])
 			return Vector(ret)
 		
 	def __radd__(self, lhs):
 		if not isinstance(lhs, Vector):
 			if self.shape == (1, 1):
 				try:
-					ret = self.value[0][0] + lhs
+					ret = self.values[0][0] + lhs
 				except TypeError:
-					raise Exception("Vector.__radd__() no overload viable for '{} + {}'".format(lhs, self.value))
-				print("Vector.__radd__(): {} + {}".format(lhs, self.value))
+					raise NotImplementedError("'{} + {}' Add a {} to a Vector is not defined here.".format(lhs, self.values, type(lhs)))
+				print("Vector.__radd__(): {} + {}".format(lhs, self.values))
 				return Vector([[ret]])
 			else:
-				raise Exception("Vector.__radd__() no overload viable for '{} + {}'".format(lhs, self.value))
+				raise NotImplementedError("'{} + {}' Add a {} to a non-scalar Vector is not defined here.".format(lhs, self.values, type(lhs)))
 		
-		print("Vector.__radd__() {} + {}".format(lhs.value, self.value))
 		if self.shape != lhs.shape:
-			raise Exception("Vector.__radd__() vectors have different shapes")
+			raise NotImplementedError("'{} + {}' Add Vectors with differents shapes is not defined here.".format(lhs, self.values))
+		
+		print("Vector.__radd__() {} + {}".format(lhs.values, self.values))
+		
 		ret = []
 		if self.shape[0] == 1 and self.shape[1] > 0:
 			for i in range(self.shape[1]):
-				ret.append(lhs.value[0][i] + self.value[0][i])
+				ret.append(lhs.values[0][i] + self.values[0][i])
 			return Vector([ret])
 		elif self.shape[1] == 1 and self.shape[0] > 0:
 			for i in range(self.shape[0]):
-				ret.append([lhs.value[i][0] + self.value[i][0]])
+				ret.append([lhs.values[i][0] + self.values[i][0]])
 			return Vector(ret)
 
 	def __sub__(self, rhs):
 		if not isinstance(rhs, Vector):
 			if self.shape == (1, 1):
 				try:
-					ret = self.value[0][0] - rhs
+					ret = self.values[0][0] - rhs
 				except TypeError:
-					raise Exception("Vector.__sub__() no overload viable for '{} - {}'".format(self.value, rhs))
-				print("Vector.__sub__(): {} - {}".format(self.value, rhs))
+					raise NotImplementedError("'{} - {}' Subtract a Vector by a {} is not defined here.".format(self.values, rhs, type(rhs)))
+				print("Vector.__sub__(): {} - {}".format(self.values, rhs))
 				return Vector([[ret]])
 			else:
-				raise Exception("Vector.__sub__() no overload viable for '{} - {}'".format(self.value, rhs))
+				raise NotImplementedError("'{} - {}' Subtract a non-scalar Vector by a {} is not defined here.".format(self.values, rhs, type(rhs)))
 		
-		print("Vector.__sub__(): {} - {}".format(self.value, rhs.value))
 		if self.shape != rhs.shape:
-			raise Exception("Vector.__sub__() vectors have different shapes")
+			raise NotImplementedError("'{} - {}' Subtract Vectors with differents shapes is not defined here.".format(self.values, rhs))
+		
+		print("Vector.__sub__(): {} - {}".format(self.values, rhs.values))
+		
 		ret = []
 		if self.shape[0] == 1 and self.shape[1] > 0:
 			for i in range(self.shape[1]):
-				ret.append(self.value[0][i] - rhs.value[0][i])
+				ret.append(self.values[0][i] - rhs.values[0][i])
 			return Vector([ret])
 		elif self.shape[1] == 1 and self.shape[0] > 0:
 			for i in range(self.shape[0]):
-				ret.append([self.value[i][0] - rhs.value[i][0]])
+				ret.append([self.values[i][0] - rhs.values[i][0]])
 			return Vector(ret)
 
 	def __rsub__(self, lhs):
 		if not isinstance(lhs, Vector):
 			if self.shape == (1, 1):
 				try:
-					ret = lhs - self.value[0][0]
+					ret = lhs - self.values[0][0]
 				except TypeError:
-					raise Exception("Vector.__rsub__() no overload viable for '{} + {}'".format(lhs, self.value))
-				print("Vector.__rsub__(): {} - {}".format(lhs, self.value))
+					raise NotImplementedError("'{} - {}' Subtract a {} by a Vector is not defined here.".format(lhs, self.values, type(lhs)))
+				print("Vector.__rsub__(): {} - {}".format(lhs, self.values))
 				return Vector([[ret]])
 			else:
-				raise Exception("Vector.__rsub__() no overload viable for '{} + {}'".format(lhs, self.value))
+				raise NotImplementedError("'{} - {}' Subtract a {} by a non-scalar Vector is not defined here.".format(lhs, self.values, type(lhs)))
 
-		print("Vector.__rsub__() {} - {}".format(lhs.value, self.value))
 		if self.shape != lhs.shape:
-			raise Exception("Vector.__rsub__() vectors have different shapes")
+			raise NotImplementedError("'{} - {}' Subtract Vectors with differents shapes is not defined here.".format(lhs, self.values))
+		
+		print("Vector.__rsub__() {} - {}".format(lhs.values, self.values))
+		
 		ret = []
 		if self.shape[0] == 1 and self.shape[1] > 0:
 			for i in range(self.shape[1]):
-				ret.append(lhs.value[0][i] - self.value[0][i])
+				ret.append(lhs.values[0][i] - self.values[0][i])
 			return Vector([ret])
 		elif self.shape[1] == 1 and self.shape[0] > 0:
 			for i in range(self.shape[0]):
-				ret.append([lhs.value[i][0] - self.value[i][0]])
+				ret.append([lhs.values[i][0] - self.values[i][0]])
 			return Vector(ret)
 
 	def	__mul__(self, rhs):
 
 		if not isinstance(rhs, Vector):
-			raise Exception("Vector__mul__() not overload viable for '{} * {}'".format(self.value, rhs.value))
+			try:
+				self.values[0][0] * rhs
+			except TypeError:
+				raise NotImplementedError("'{} * {}' Multiply Vector by a {} is not defined here.".format(self.values, rhs, type(rhs)))
+			
+			print("Vector.__mul__(): {} * {}".format(self.values, rhs))
+			
+			ret = []
+			if self.shape[0] == 1:
+				for i in self.values[0]:
+					ret.append(i * rhs)
+				return (Vector([ret]))
+			else:
+				for i in self.values:
+					ret.append([i[0] * rhs])
+				return (Vector(ret))
 		else:
 			if self.shape != (1, 1) and rhs.shape != (1, 1):
-				raise Exception("Vector__mul__() not overload viable for '{} * {}'".format(self.value, rhs.value))
-
-			print("Vector.__mul__(): {} * {}".format(self.value, rhs))
+				raise NotImplementedError("'{} * {}' Multiply non-scalar Vectors by non-scalar Vectors is not defined here.".format(self.values, rhs.values))
+			
+			print("Vector.__mul__(): {} * {}".format(self.values, rhs.values))
 			
 			ret = []
 			if self.shape == (1, 1):
 				lhs = rhs
-				rhs = self.value[0][0]
+				rhs = self.values[0][0]
 			elif rhs.shape == (1, 1):
 				lhs = self
-				rhs = rhs.value[0][0]
+				rhs = rhs.values[0][0]
 			
 			if lhs.shape[0] == 1 and lhs.shape[1] > 0:
 				for i in range(lhs.shape[1]):
-					ret.append(lhs.value[0][i] * rhs)
+					ret.append(lhs.values[0][i] * rhs)
 				return Vector([ret])
 			elif lhs.shape[1] == 1 and lhs.shape[0] > 0:
 				for i in range(lhs.shape[0]):
-					ret.append([lhs.value[i][0] * rhs])
+					ret.append([lhs.values[i][0] * rhs])
 				return Vector(ret)
 
 
 
 	def __rmul__(self, lhs):
-		if isinstance(lhs, Vector) and not lhs.shape == (1, 1):
-			raise Exception("Vector__rmul__() not overload viable for '{} * {}'".format(self.value, lhs.value))
+		try:
+			lhs * self.values[0][0]
+		except TypeError:
+				raise NotImplementedError("'{} * {}' Multiply {} by Vector is not defined here.".format(lhs, self.values, type(lhs)))
+		
+		print("Vector.__rmul__(): {} * {}".format(lhs, self.values))
 
 		ret = []
-		if isinstance(lhs, Vector) and lhs.shape == (1, 1):
-			print("Vector__rmul__(): {} * {}".format(self.value, lhs.value))
-			lhs = lhs.value[0][0]
-		else:
-			print("Vector__rmul__(): {} * {}".format(self.value, lhs))
-
 		if self.shape[0] == 1 and self.shape[1] > 0:
 			for i in range(self.shape[1]):
-				ret.append(lhs * self.value[0][i])
+				ret.append(lhs * self.values[0][i])
 			return Vector([ret])
 		elif self.shape[1] == 1 and self.shape[0] > 0:
 			for i in range(self.shape[0]):
-				ret.append([lhs * self.value[i][0]])
+				ret.append([lhs * self.values[i][0]])
 			return Vector(ret)
 
 
+	def	__truediv__(self, rhs):
 
+		if not isinstance(rhs, Vector):
+			try:
+				self.values[0][0] / rhs
+			except TypeError:
+				raise NotImplementedError("'{} / {}' Divide Vector by a {} is not defined here.".format(self.values, rhs, type(rhs)))
+			
+			print("Vector.__truediv__(): {} / {}".format(self.values, rhs))
+			
+			ret = []
+			if self.shape[0] == 1:
+				for i in self.values[0]:
+					ret.append(i / rhs)
+				return (Vector([ret]))
+			else:
+				for i in self.values:
+					ret.append([i[0] / rhs])
+				return (Vector(ret))
+		else:
+			if rhs.shape != (1, 1):
+				raise NotImplementedError("'{} / {}' Division of a scalar by a Vector is not defined here.".format(self.values, rhs.values))
+			
+			print("Vector.__truediv__(): {} / {}".format(self.values, rhs.values))
+			
+			ret = []
+			if self.shape == (1, 1):
+				lhs = rhs
+				rhs = self.values[0][0]
+			elif rhs.shape == (1, 1):
+				lhs = self
+				rhs = rhs.values[0][0]
+			
+			if lhs.shape[0] == 1 and lhs.shape[1] > 0:
+				for i in range(lhs.shape[1]):
+					ret.append(lhs.values[0][i] / rhs)
+				return Vector([ret])
+			elif lhs.shape[1] == 1 and lhs.shape[0] > 0:
+				for i in range(lhs.shape[0]):
+					ret.append([lhs.values[i][0] / rhs])
+				return Vector(ret)
 
-	def __str__(self):
-		txt = "value: {}\nshape: {}".format(self.value, self.shape)
-		return txt
+	def __rtruediv__(self, lhs):
+		if self.shape != (1, 1):
+			raise NotImplementedError("'{} / {}' Division of a scalar by a Vector is not defined here.".format(lhs, self.values, type(lhs)))
+
+		try:
+			lhs / self.values[0][0]
+		except TypeError:
+				raise NotImplementedError("'{} / {}' Divide {} by Vector is not defined here.".format(lhs, self.values, type(lhs)))
+
+		print("Vector.__rtruediv__(): {} / {}".format(lhs, self.values))
+
+		return Vector([[lhs / self.values[0][0]]])
+
