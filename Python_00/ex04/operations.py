@@ -3,7 +3,7 @@ import sys
 sys.tracebacklimit = -1
 
 if len(sys.argv) > 3:
-    raise AssertionError("tow many arguments")
+    raise AssertionError("too many arguments")
 elif len(sys.argv) < 3:
     raise AssertionError("not enough arguments")
 

@@ -1,5 +1,8 @@
 # Put this at the top of your kata00.py file
-kata = (12,21)
+kata = (1, 2, 5)
+
+if not isinstance(kata, tuple):
+	raise AssertionError("Not a tuple")
 
 for i in (kata):
     if not isinstance(i, int):

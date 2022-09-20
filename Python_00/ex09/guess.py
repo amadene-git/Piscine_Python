@@ -1,5 +1,4 @@
 from curses.ascii import isdigit
-import secrets
 import random
 
 print("This is an interactive guessing game!\n\
@@ -8,18 +7,23 @@ Type 'exit' to end the game.\n\
 Good luck!\n")
 
 secretnb = random.randint(1, 99)
-secretnb = 42
+# secretnb = 42
+# secretnb = 43
 
 i = 1
 while i:
 	print("What's your guess between 1 and 99?")
-	line = input(">> ")
+	try:
+		line = input(">> ")
+	except (EOFError, KeyboardInterrupt):
+		line = "exit"
 
 	if line == "exit":
 		print("Goodbye!")
 		break
 	elif not line.isdigit():
 		print("That's not a number.")
+		i -= 1
 	elif int(line) not in range(1, 99):
 		print("Number is not between 1 and 99")
 	elif int(line) > secretnb:

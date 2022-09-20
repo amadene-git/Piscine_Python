@@ -2,8 +2,6 @@ import sys
 
 if len(sys.argv) == 1:
 	quit(0)
-# elif len(sys.argv) > 2:
-# 	print("ERROR", file= sys.stderr)
 
 morse_dict = {
 'A':	".-",
@@ -45,7 +43,7 @@ morse_dict = {
 ' ':	"/"
 }
 
-str = ''
+str = str()
 for i in range(1, len(sys.argv)):
 	
 	for letter in sys.argv[i].upper():

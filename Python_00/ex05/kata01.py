@@ -5,11 +5,12 @@ kata = {
 'PHP': 'Rasmus Lerdorf',
 }
 
-katakeys = list(kata.keys())
+if not isinstance(kata, dict):
+	raise AssertionError("kata is not a dictionary")
 
-for i in katakeys:
-    if not isinstance(i, str) or not isinstance(kata[i], str):
-        raise AssertionError("Not a string")
+for key, value in kata.items():
+	if not isinstance(key, str) or not isinstance(value, str):
+		raise AssertionError("kata is not a dictionary of string")
 
-for i in katakeys:
-    print("{0} was created by {1}".format(i, kata[i]))
+for key, value in kata.items():
+	print(key, " was created by ", value)

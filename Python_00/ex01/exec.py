@@ -1,11 +1,5 @@
 import sys
 
-i = len(sys.argv) - 1
-endl = ' '
-
-while i > 0:
-    if i == 1:
-        endl = '\n'
-    print(sys.argv[i][::-1].swapcase(), end=endl)
+for i in sys.argv[::-1]:
+    print(i[::-1].swapcase(), end='\n' if i == 1 else ' ')
     
-    i -= 1

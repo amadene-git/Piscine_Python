@@ -1,10 +1,9 @@
-from curses.ascii import isalpha
 import sys
 
 # sys.tracebacklimit = -1
 
 cookbook = {"sandwich": {	
-							"ingredients":	["ham", "bread", "cheese", "tomatoes"], 
+							"ingredients":	["ham", "bread", "cheese", "tomatoes"],
                             "meal":	"lunch",
                             "prep_time":	10
 						},
@@ -44,7 +43,7 @@ def	delete_recipe_by_name(name):
 	if not name in cookbook.keys():
 		print(">>> Sorry, '{}' recipe does not exist.".format(name))
 		return
-	print("\nRecipe for cake has been removed\n")
+	print("\nRecipe for {} has been removed\n".format(name))
 	cookbook.pop(name)
 
 def add_recipe_by_stdin():
@@ -59,7 +58,7 @@ def add_recipe_by_stdin():
 			print(">>> '{}': invalid name.".format(name))
 			print(">>> Please enter a name:")
 		elif name in cookbook.keys():
-			print(">>> Sorry, the {} recipe already exists")
+			print(">>> Sorry, the {} recipe already exists".format(name))
 		else:
 			recipe[name] = {}
 			break
@@ -122,35 +121,27 @@ while 1:
 
 	try:
 		line = input(">>> Please select an option:\n>> ")
-	except EOFError:
-		line = 5
-	except KeyboardInterrupt:
-		line = 5
-
-	try:
-		line = int(line)
-	except ValueError:
-		print(">>> Sorry, this option does not exist.\n")
-		continue	
-	if int(line) < 1 or int(line) > 5:
-		print(">>> Sorry, this option does not exist.\n")
-		continue
-
-	if line == 1:
+	except (EOFError, KeyboardInterrupt):
+		line = '5'
+	
+	if not line.isdigit() or int(line) < 1 or int(line) > 5:
+		line = '0'
+	
+	if line == '1':
 		add_recipe_by_stdin()
-	elif line == 2:
+	elif line == '2':
 		print("\n>>> Please enter a recipe to delete:")
 		line = input(">> ")
 		delete_recipe_by_name(line)
-	elif line == 3:
+	elif line == '3':
 		print("\n>>> Please enter a recipe name to print:")
 		line = input(">> ")
 		print_recipe_by_name(line)
-	elif line == 4:
+	elif line == '4':
 		print_all_recipe_names()
-	elif line == 5:
+	elif line == '5':
 		print("\nCookbook closed. Goodbye !")
 		break
-	else:
+	elif line == '0':
 		print(">>> Sorry, this option does not exist.\n")
 		continue

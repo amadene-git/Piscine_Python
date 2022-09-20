@@ -18,7 +18,6 @@ def text_analyzer(*argv):
     punct = 0
     space = 0
 
-
     if argc == 0:
         text = input("What is the text to analyze?\n>> ")
     elif argc != 1:
@@ -47,11 +46,9 @@ def text_analyzer(*argv):
 
 
 if __name__=='__main__':
-    
-    
-    if len(sys.argv) > 2:
-        raise AssertionError("more than one argument is provided")
-    elif len(sys.argv) == 2:
-        text_analyzer(sys.argv[1])
-    else:
-        text_analyzer()
+	if len(sys.argv) > 2:
+		raise AssertionError("more than one argument is provided")
+	elif len(sys.argv) == 2:
+		text_analyzer(sys.argv[1])
+	else:
+		text_analyzer()

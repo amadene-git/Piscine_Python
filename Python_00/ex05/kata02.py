@@ -1,6 +1,9 @@
 # Put this at the top of your kata02.py file
 kata = (2019, 9, 25, 3, 30)
 
+if not isinstance(kata, tuple):
+	raise AssertionError("kata is not a tuple")
+
 if len(kata) < 5 or len(kata) > 5:
     raise AssertionError("Wrong number of kata items")
 
