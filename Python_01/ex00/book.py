@@ -8,8 +8,8 @@ class Book:
 	
 	def __init__(self, name: str):
 		self.name = name			#name (str): name of the book,
-		self.last_update: datetime = datetime.now()	#last_update (datetime): the date of the last update,
 		self.creation_date: datetime = datetime.now() 	#creation_date (datetime): the creation date,
+		self.last_update = self.creation_date	#last_update (datetime): the date of the last update,
 		self.recipes_list = {} 	#recipes_list (dict): a dictionnary with 3 keys: "starter", "lunch", "dessert".
 		self.recipes_list["lunch"] = 	[]
 		self.recipes_list["dessert"] = 	[]
@@ -45,14 +45,16 @@ class Book:
 	def add_recipe(self, recipe):
 		"""Add a recipe to the book and update last_update"""
 		if (not isinstance(recipe, Recipe)):
-			print("Error {} add_recipe() bad recipe type given")
+			print(f"Error add_recipe() bad recipe type given")
 		
 		self.recipes_list[recipe.recipe_type].append(recipe)
 		self.last_update = datetime.now()
 
 
 	def __str__(self):
-		txt = "Book name :{}\n".format(self.name)
+		txt = f"Book name : {self.name}\n"
+		txt += f"creation date: {self.creation_date}\n"
+		txt += f"last update:   {self.last_update}\n"
 		for key, value in self.recipes_list.items():
 			txt += "{}:\n".format(key)
 			for i in value:

@@ -1,6 +1,8 @@
+from random import random
 import sys
 import time
 from time import sleep
+import random
 
 bar_len = 20
 
@@ -29,6 +31,6 @@ listy = range(1000)
 ret = 0
 for elem in ft_progress(listy):
 	ret += (elem + 3) % 5
-	sleep(0.01)
+	sleep(random.randrange(1, 5) / 100)
 print()
 print(ret)

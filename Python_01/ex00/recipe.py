@@ -8,31 +8,36 @@ def print_error(message: str):
 
 class Recipe:
 	def __init__(self, name: str, cooking_lvl: int, cooking_time: int, recipe_type: str, ingredients = [str], description: str=""):
-		
-		if (len(name) == 0):
-			print_error("Error Recipe: no name given")
-		self.name = name						#(str)		name of the recipe,
-		
-		if (cooking_lvl < 1 or cooking_lvl > 5):
-			print_error("Error creating Recipe '{}': cooking_lvl is not between 1 and 5".format(name))
-		self.cooking_lvl = cooking_lvl			#(int):		range from 1 to 5,
-		
-		if (cooking_time < 0):
-			print_error("Error creating Recipe '{}' : cooking_time cannot be negative value".format(name))
-		self.cooking_time = cooking_time		#(int):		in minutes (no negative numbers),
-		
-		if (len(ingredients) == 0):
-			print_error("Error creating Recipe '{}' : no ingredients given".format(name))
-		for i in ingredients:
-			if (len(i) == 0):
-				print_error("Error creating Recipe '{}' : ingredients is not valid".format(name))
-		self.ingredients = ingredients			#(list):	list of all ingredients each represented by a string,
-		
-		self.description = description			#(str):		description of the recipe,
-		
-		if (not recipe_type in ["starter", "lunch", "dessert"]):
-			print_error("Error creating Recipe '{}' : recipe type can only be starter, lunch or dessert".format(name))
-		self.recipe_type = recipe_type			#(str):		can be "starter", "lunch" or "dessert"
+	
+		try:
+			if (len(name) == 0):
+				print_error("Error Recipe: no name given")
+			self.name = name						#(str)		name of the recipe,
+
+			if (cooking_lvl < 1 or cooking_lvl > 5):
+				print_error("Error creating Recipe '{}': cooking_lvl is not between 1 and 5".format(name))
+			self.cooking_lvl = cooking_lvl			#(int):		range from 1 to 5,
+
+			if (cooking_time < 0):
+				print_error("Error creating Recipe '{}' : cooking_time cannot be negative value".format(name))
+			self.cooking_time = cooking_time		#(int):		in minutes (no negative numbers),
+
+			if (len(ingredients) == 0):
+				print_error("Error creating Recipe '{}' : no ingredients given".format(name))
+			for i in ingredients:
+				if (len(i) == 0):
+					print_error("Error creating Recipe '{}' : ingredients is not valid".format(name))
+			self.ingredients = ingredients			#(list):	list of all ingredients each represented by a string,
+
+			if not isinstance(description, str) and not description is None:
+				raise TypeError
+			self.description = description			#(str):		description of the recipe,
+
+			if (not recipe_type in ["starter", "lunch", "dessert"]):
+				print_error("Error creating Recipe '{}' : recipe type can only be starter, lunch or dessert".format(name))
+			self.recipe_type = recipe_type			#(str):		can be "starter", "lunch" or "dessert"
+		except TypeError:
+			print_error("TypeError in recipe.__init__()")
 
 	def __str__(self):
 		"""Return the string to print with the recipe info"""

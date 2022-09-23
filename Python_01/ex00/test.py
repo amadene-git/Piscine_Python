@@ -1,12 +1,13 @@
 from recipe import Recipe
 from book import Book
+from time import sleep
 
-pudding = Recipe(	name="pudding",
-					cooking_time=10,
-					cooking_lvl=5,
-					ingredients=["tomates"],
-					recipe_type=10,
-					description="Miam Miam")
+pudding = Recipe(	name="lol",
+					cooking_time=0,
+					cooking_lvl=1,
+					ingredients=["tomatoes"],
+					recipe_type="lunch",
+					description= None)
 
 
 cake = Recipe(	name="cake",
@@ -18,12 +19,13 @@ cake = Recipe(	name="cake",
 
 
 
-# print(str(pudding))
+print(str(pudding))
 
 
 cookbook = Book("CookBook")
 
 print(cookbook)
+sleep(1)
 print("\nadd\n")
 cookbook.add_recipe(pudding)
 
@@ -31,6 +33,8 @@ print(cookbook)
 print("\nget\n")
 
 copy = cookbook.get_recipe_by_name("pudding")
+
+sleep(1)
 
 print("\nget recipes by keys\n")
 
