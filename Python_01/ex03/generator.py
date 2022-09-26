@@ -37,9 +37,9 @@ def generator(text, sep=" ", option=None):
 	
 
 
-text = "Le Lorem Ipsum est simplement du faux texte."
-for word in generator(text):
-	print(word)
+# text = "Le Lorem Ipsum est simplement du faux texte."
+# for word in generator(text):
+# 	print(word)
 # Le
 # Lorem
 # Ipsum
