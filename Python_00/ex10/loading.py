@@ -13,7 +13,7 @@ def	ft_progress(lst):
 		t_one = time.time()		
 		filled_bar = int(round(i * bar_len / len(lst)))
 		bar = '=' * filled_bar + '>' + ' ' * (bar_len - filled_bar)
-		sys.stdout.write("ETA: {eta:.2f}s [{percent: >3}%][{bar}] {i: >6}/{total} | elapsed time {time:.2f}s{end}"\
+		sys.stdout.write("ETA: {eta}s [{percent: >3}%][{bar}] {i: >6}/{total} | elapsed time {time}s{end}"\
 		.format\
 		(\
 			bar = bar,\

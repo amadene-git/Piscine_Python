@@ -13,34 +13,34 @@ class Book:
 		self.recipes_list = {} 	#recipes_list (dict): a dictionnary with 3 keys: "starter", "lunch", "dessert".
 		self.recipes_list["lunch"] = 	[]
 		self.recipes_list["dessert"] = 	[]
-		self.recipes_list["started"] = 	[]
+		self.recipes_list["starter"] = 	[]
 
 
 	def get_recipe_by_name(self, name):
 		"""Prints a recipe with the name \texttt{name} and returns the instance"""
 		if not isinstance(name, str):
-			print_error("Error {} get_recipe_by_name(): name given is not a string". self.name)
+			print_error(f"Error {self.name} get_recipe_by_name(): name given is not a string")
 		
+
 		for i in self.recipes_list.values():
 			for j in i:
 				if j.name == name:
 					print(j)
-				return j
+					return j
+
 		print("Sorry, there is no recipe named {} in the {} Book".format(name, self.name))
 
 	def get_recipes_by_types(self, recipe_type):
 		"""Get all recipe names for a given recipe_type """
-		if (not isinstance(recipe_type, str)):
-			print_error("Error {} get_recipes_by_types(): recipe type given is not a string")
-		for key, value in self.recipes_list.items():
-			if key == recipe_type:
-				print("{}:".format(key))
-				for i in value:
-					print("\t{}".format(i.name))
-				print()
-			return			
-
-		print("Sorry, bad recipe type")
+		if (not isinstance(recipe_type, str) or not recipe_type in ["dessert", "lunch", "starter"]):
+			print_error("Error get_recipes_by_types(): bad recipe_type")
+		
+		if (len(self.recipes_list[recipe_type]) == 0):
+			print(f"No {recipe_type} recipe in {self.name}")
+			return
+		print(f'{recipe_type}: ')
+		for i in self.recipes_list[recipe_type]:
+			print(i, "\n")
 
 	def add_recipe(self, recipe):
 		"""Add a recipe to the book and update last_update"""
@@ -56,7 +56,7 @@ class Book:
 		txt += f"creation date: {self.creation_date}\n"
 		txt += f"last update:   {self.last_update}\n"
 		for key, value in self.recipes_list.items():
-			txt += "{}:\n".format(key)
+			txt += f"{key}:\n"
 			for i in value:
 				txt += str(i) + "\n\n"
 		return txt

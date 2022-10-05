@@ -2,12 +2,12 @@ from recipe import Recipe
 from book import Book
 from time import sleep
 
-pudding = Recipe(	name="lol",
+pudding = Recipe(	name="pudding",
 					cooking_time=0,
 					cooking_lvl=1,
 					ingredients=["tomatoes"],
 					recipe_type="lunch",
-					description= None)
+					description= "")
 
 
 cake = Recipe(	name="cake",
@@ -44,3 +44,5 @@ cookbook.get_recipes_by_types("lunch")
 
 
 print(cookbook)
+
+
