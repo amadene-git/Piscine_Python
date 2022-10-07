@@ -6,12 +6,13 @@ def generator(text, sep=" ", option=None):
 	option precise if a action is performed to the substrings before it is yielded.
 	'''
 	
-	if (not option in ["shuffle", "unique", "ordered"] and not option is None) or not isinstance(text, str) or not isinstance(sep, str):
+	if (not option in ["shuffle", "unique", "ordered"] and not option is None)\
+		or not isinstance(text, str) or not isinstance(sep, str):
 	# if text != str or sep != str or (not option in ["shuffle", "unique", "ordered"] and option != None):
 		yield "Error"
 		return
 
-	mylist = text.split()
+	mylist = text.split(sep)
 
 	if option == "shuffle":
 		for i in range(len(mylist)):
@@ -33,8 +34,6 @@ def generator(text, sep=" ", option=None):
 	else:
 		for i in mylist:
 			yield i
-
-	
 
 
 # text = "Le Lorem Ipsum est simplement du faux texte."

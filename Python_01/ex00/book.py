@@ -34,13 +34,16 @@ class Book:
 		"""Get all recipe names for a given recipe_type """
 		if (not isinstance(recipe_type, str) or not recipe_type in ["dessert", "lunch", "starter"]):
 			print_error("Error get_recipes_by_types(): bad recipe_type")
+			return None
 		
 		if (len(self.recipes_list[recipe_type]) == 0):
 			print(f"No {recipe_type} recipe in {self.name}")
-			return
+			return []
+		
 		print(f'{recipe_type}: ')
 		for i in self.recipes_list[recipe_type]:
 			print(i, "\n")
+		return self.recipes_list[recipe_type]
 
 	def add_recipe(self, recipe):
 		"""Add a recipe to the book and update last_update"""
@@ -57,6 +60,9 @@ class Book:
 		txt += f"last update:   {self.last_update}\n"
 		for key, value in self.recipes_list.items():
 			txt += f"{key}:\n"
+			if len(value) == 0:
+				txt = txt.rstrip(txt[-1])
+				txt += " []\n"
 			for i in value:
-				txt += str(i) + "\n\n"
-		return txt
+				txt += "\t" + i.name + "\n"
+		return txt.rstrip(txt[-1])

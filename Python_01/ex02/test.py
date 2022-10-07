@@ -106,7 +106,7 @@ print("########### ", v1)
 v2 = v1 / 2.0
 print(v2)
 # Expected output
-# Vector([[0.0], [0.5], [1.0], [1.5]]) <--------------------- 
+# Vector([[0.0], [0.5], [1.0], [1.5]]) <- 
 print("# Vector([[0.0], [0.5], [1.0], [1.5]])")
 
 # v1 / 0.0
@@ -186,7 +186,7 @@ print("# 18.0")
 v3 = Vector([[1.0, 3.0]])
 v4 = Vector([[2.0, 4.0]])
 print(v3.dot(v4))
-# Expected output: <--------------------- 
+# Expected output: <---------------------------- 
 # 13.0
 print("# 13.0")
 
@@ -199,3 +199,4 @@ print(v1)
 # Expected output: to see what __str__() should do
 # [[0.0, 1.0, 2.0, 3.0]]
 print("# [[0.0, 1.0, 2.0, 3.0]]")
+

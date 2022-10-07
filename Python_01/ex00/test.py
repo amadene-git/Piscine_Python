@@ -44,5 +44,3 @@ cookbook.get_recipes_by_types("lunch")
 
 
 print(cookbook)
-
-

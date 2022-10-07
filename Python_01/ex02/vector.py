@@ -8,6 +8,7 @@ def append(str):
 
 class Vector:
 	def __init__(self, *args) -> None:
+				
 		if (len(args) < 1 or len(args) > 1):
 			raise Exception("Vector.__init__() have {} argument, expected 1".format(len(args)))
 		
@@ -20,7 +21,8 @@ class Vector:
 				self.values.append([i])
 				i += 1
 		
-		elif isinstance(args[0], tuple) and len(args[0]) == 2 and args[0][0] <= args[0][1]:
+		elif isinstance(args[0], tuple) and len(args[0]) == 2 and args[0][0] <= args[0][1]\
+			and isinstance(args[0][0], int) and isinstance(args[0][1], int):
 			# print("range init called")
 			i = args[0][0]
 			self.values = []
@@ -44,7 +46,11 @@ class Vector:
 					raise Exception("Vector.__init__() {} is not a valid argument")
 			self.values = args[0]
 			self.shape = (len(args[0]), 1)
-		
+		elif isinstance(args[0], list) and len(args[0]) > 0:
+			for i in args[0]:
+				if not isinstance(i, float):
+					raise Exception("Vector.__init__() {} is not a valid argument")
+			self.values = args[0]
 		else:
 			raise Exception(f"Vector.__init__() {args[0]} is not a valid argument")
 
@@ -197,7 +203,6 @@ class Vector:
 				self.values[0][0] * rhs
 			except TypeError:
 				raise NotImplementedError("'{} * {}' Multiply Vector by a {} is not defined here.".format(self, rhs, type(rhs)))
-			
 			# print("Vector.__mul__(): {} * {}".format(self, rhs))
 			
 			ret = []

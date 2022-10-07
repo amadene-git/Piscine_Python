@@ -1,7 +1,6 @@
-import sys
-
 class GotCharacter:
-	def __init__(self, first_name: str, is_alive = True):
+	'''A class representing the GoT's characters. But I prefer Harry Potter and LotR.'''
+	def __init__(self, first_name=None, is_alive = True):
 		self.first_name = first_name
 		self.is_alive = is_alive
 
@@ -34,7 +33,7 @@ class Gryffindor(GotCharacter):
 		self.is_alive = False
 
 class Hobbits(GotCharacter):
-	'''A class representing the Hobbit race. Or '''
+	'''A class representing the Hobbit race. Or people with hairy feet'''
 	def __init__(self, first_name=None, is_alive=True):
 		super().__init__(first_name=first_name, is_alive=is_alive)
 		self.family_name = "Sacquet"
