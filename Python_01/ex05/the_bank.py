@@ -22,6 +22,11 @@ class Account(object):
 	def transfer(self, amount):
 		self.value += amount
 
+	def __repr__(self) -> str:
+		return f"[{self.id}] {self.name}:\nvalue: {self.value}"
+	def __str__(self) -> str:
+		return f"[{self.id}] {self.name}:\nvalue: {self.value}"
+
 # in the_bank.py
 class Bank(object):
 	"""The bank"""
@@ -137,7 +142,10 @@ class Bank(object):
 			return False
 		acc_src.value -= amount
 		acc_dest.value += amount
-	
+
+		return True
+
+
 
 
 	def fix_account(self, name):
@@ -192,7 +200,21 @@ class Bank(object):
 			else:
 				acc.__dict__['odd_attr'] = 'odd'
 
+		return True
 
+	def __str__(self):
+		out = ""
+		for i in self.accounts:
+			out += str(i) + "\n"
+
+		return out
+
+	def __repr__(self):
+		out = ""
+		for i in self.accounts:
+			out += str(i) + "\n"
+
+		return out
 
 print("test 1\n")
 bank = Bank()

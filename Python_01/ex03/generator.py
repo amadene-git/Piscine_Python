@@ -7,9 +7,9 @@ def generator(text, sep=" ", option=None):
 	'''
 	
 	if (not option in ["shuffle", "unique", "ordered"] and not option is None)\
-		or not isinstance(text, str) or not isinstance(sep, str):
-	# if text != str or sep != str or (not option in ["shuffle", "unique", "ordered"] and option != None):
-		yield "Error"
+		or not isinstance(text, str) or not isinstance(sep, str)\
+		or len(sep) == 0:
+		yield "ERROR"
 		return
 
 	mylist = text.split(sep)
@@ -36,38 +36,39 @@ def generator(text, sep=" ", option=None):
 			yield i
 
 
-# text = "Le Lorem Ipsum est simplement du faux texte."
-# for word in generator(text):
-# 	print(word)
-# Le
-# Lorem
-# Ipsum
-# est
-# simplement
-# du
-# faux
-# texte.
+# if __name__ == '__main__':
+# 	text = "Le Lorem Ipsum est simplement du faux texte."
+# 	for word in generator(text):
+# 		print(word)
+# 	# Le
+# 	# Lorem
+# 	# Ipsum
+# 	# est
+# 	# simplement
+# 	# du
+# 	# faux
+# 	# texte.
 
-# print()
-# for word in generator(text, sep=" ", option="shuffle"):
-# 	print(word)
+# 	print()
+# 	for word in generator(text, sep=" ", option="shuffle"):
+# 		print(word)
 
-# print()
-# for word in generator(text, sep=" ", option="ordered"):
-# 	print(word)
-# # Ipsum
-# # Le
-# # Lorem
-# # du
-# # est
-# # faux
-# # simplement
-# # texte.
+# 	print()
+# 	for word in generator(text, sep=" ", option="ordered"):
+# 		print(word)
+# 	# Ipsum
+# 	# Le
+# 	# Lorem
+# 	# du
+# 	# est
+# 	# faux
+# 	# simplement
+# 	# texte.
 
-# print()
-# text = "Lorem Ipsum Lorem Ipsum"
-# for word in generator(text, sep=" ", option="unique"):
-# 	print(word)
-# # Lorem
-# # Ipsum
+# 	print()
+# 	text = "Lorem Ipsum Lorem Ipsum"
+# 	for word in generator(text, sep=" ", option="unique"):
+# 		print(word)
+# 	# Lorem
+# 	# Ipsum
 

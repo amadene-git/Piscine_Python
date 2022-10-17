@@ -3,7 +3,7 @@ from typing import List
 
 def print_error(message: str):
 	print(message, file=sys.stderr)
-	# quit()
+	quit()
 
 
 class Recipe:

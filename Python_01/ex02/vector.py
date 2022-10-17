@@ -50,7 +50,8 @@ class Vector:
 			for i in args[0]:
 				if not isinstance(i, float):
 					raise Exception("Vector.__init__() {} is not a valid argument")
-			self.values = args[0]
+			self.values = [args[0]]
+			self.shape = (1, len(args[0]))
 		else:
 			raise Exception(f"Vector.__init__() {args[0]} is not a valid argument")
 
