@@ -1,4 +1,17 @@
-admadene start_machine
-admadene boil_water
-admadene make_coffee
-admadene add_water
+(admadene) Running: Start Machine  [ exec-time = 0.001 ms ]
+(admadene) Running: Boil Water     [ exec-time = 0.007 ms ]
+(admadene) Running: Make Coffee    [ exec-time = 2.007 s ]
+(admadene) Running: Start Machine  [ exec-time = 0.003 ms ]
+(admadene) Running: Boil Water     [ exec-time = 0.005 ms ]
+(admadene) Running: Make Coffee    [ exec-time = 2.008 s ]
+(admadene) Running: Start Machine  [ exec-time = 0.002 ms ]
+(admadene) Running: Boil Water     [ exec-time = 0.005 ms ]
+(admadene) Running: Make Coffee    [ exec-time = 2.008 s ]
+(admadene) Running: Start Machine  [ exec-time = 0.003 ms ]
+(admadene) Running: Boil Water     [ exec-time = 0.005 ms ]
+(admadene) Running: Make Coffee    [ exec-time = 2.008 s ]
+(admadene) Running: Start Machine  [ exec-time = 0.033 ms ]
+(admadene) Running: Make Coffee    [ exec-time = 0.003 s ]
+(admadene) Running: Start Machine  [ exec-time = 0.024 ms ]
+(admadene) Running: Make Coffee    [ exec-time = 0.002 s ]
+(admadene) Running: Add Water      [ exec-time = 4.003 s ]
