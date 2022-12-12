@@ -27,9 +27,9 @@ class CsvReader():
 			print ("Error fileobj")
 			return None
 		
-		self.row = self.text.split("\n")
+		self.data = self.text.split("\n")
 
-		for i in self.row:
+		for i in self.data:
 			self.data = i.split(",")
 		
 		return self.fileobj
