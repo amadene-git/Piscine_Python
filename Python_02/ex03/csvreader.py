@@ -1,49 +1,59 @@
 class CsvReader():
 	def __init__(self, filename=None, sep=',', header=False, skip_top=0, skip_bottom=0):
-		print("__init__")
 		
 		try:
 			self.fileobj = open(filename, "r")
 		except FileNotFoundError:
-			print("CsvReader error: File not found", file=sys.stderr)
-			return None
+			raise Exception("CsvReader error: File not found.")
 		except PermissionError:
-			print("CsvReader error: Permossion denied", file=sys.stderr)
-			return None
+			raise Exception("CsvReader error: Permission denied.")
 
 		self.filename		= filename
-		self.sep 			= sep=','
-		self.header 		= header=False
-		self.skip_top 		= skip_top=0
-		self.skip_bottom 	= skip_bottom=0
+		self.sep 			= sep
+		self.header 		= header
+		self.skip_top 		= skip_top
+		self.skip_bottom 	= skip_bottom
 		self.data			= []
 		
 		self.text = self.fileobj.read()
-		
+
+		return None
+
 	def __enter__(self):
 		# ... Your code here ...
-		print("__enter__")
 		if not hasattr(self, 'fileobj'):
 			print ("Error fileobj")
 			return None
 		
-		self.data = self.text.split("\n")
+		for i in list(filter(None, self.text.split("\n"))):
+			self.data.append(i.split(self.sep))
+			if len(self.data[0]) != len(self.data[self.data.index(i.split(self.sep))]):
+				# raise Exception("CsvReader error: File corrupted, mistmatch between number of fields and number of records.")
+				return None
 
-		for i in self.data:
-			self.data = i.split(",")
+		for i in range(len(self.data)):
+			for j in range(len(self.data[i])):
+				if not (i == 0 and self.header == True) and len(self.data[i][j]) != len(self.data[len(self.data) - 1][j]):
+					# raise Exception("CsvReader error: File corrupted, records with different length.")
+					return None
 		
-		return self.fileobj
+		for i in range(len(self.data)):
+			for j in range(len(self.data[i])):
+				self.data[i][j] = list(filter(None, self.data[i][j].split(' ')))
+
+		return self
 
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
 		# ... Your code here ...
-		print("__exit__")
 		if not hasattr(self, 'fileobj'):
 			print ("Error fileobj")
 			return None
 
 
 		self.fileobj.close()
+
+		return None
 	
 	
 	def getdata(self):
@@ -52,7 +62,9 @@ class CsvReader():
 		nested list (list(list, list, ...)) representing the data.
 		"""
 		# ... Your code here ...
-	
+		return [x for x in self.data if (self.data.index(x) >= self.skip_top + self.header\
+										 and self.data.index(x) < len(self.data) - self.skip_bottom)\
+										 or (self.header == True and self.data.index(x) == 0)]
 	
 	def getheader(self):
 		""" Retrieves the header from csv file.
@@ -60,24 +72,25 @@ class CsvReader():
 		list: representing the data (when self.header is True).
 		None: (when self.header is False).
 		"""
+	
+		if self.header:
+			return self.data[0]
+		else:
+			return None
 	# ... Your code here ...
 
 
-class File(object):
-    def __init__(self, file_name, method):
-        self.file_obj = open(file_name, method)
-    def __enter__(self):
-        return self.file_obj
-    def __exit__(self, type, value, traceback):
-        print("Exception has been handled")
-        self.file_obj.close()
-        return True
 
 import sys
 
 if __name__ == "__main__":
-	with CsvReader(sys.argv[1]) as file:
-		print(f"CsvReader({sys.argv[1]})")
+	with CsvReader(sys.argv[1], skip_top=1, header=True, skip_bottom=0) as file:
+		if file == None:
+			print("File corrupted.")
+		else:
+			data = file.getdata()
+			# for i in data:
+			# 	print(i)
+			header = file.getheader()
+			# print(header)
 
-# with File(sys.argv[1], 'r') as opened_file:
-# 	print("file opened")
