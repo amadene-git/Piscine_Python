@@ -7,6 +7,7 @@ setup(
     author='Your name',
     author_email='your.email@example.com',
     description='A small package containing a logger and a progress function',
-    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    packages=find_packages(where="src")
     # install_requires=[],
 )
